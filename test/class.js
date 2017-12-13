@@ -83,4 +83,36 @@ describe('/POST class', () => {
 
       })
   })
+
+  describe('/GET/:id/students', () => {
+       it('it should GET students of the class which has a given id', (done) => {
+         let myClass = new Class({
+             batch: 1,
+             startDate: "2017-03-08",
+             endDate: "2017-05-08",
+             students: [{
+               fullname: "ha",
+               photo: "photoUrl",
+               evaluations: [],
+             }],
+         })
+
+         myClass.save((err, myClass) => {
+             chai.request(server)
+             .get('/classes/' + myClass.id + '/students')
+             .send(myClass)
+             .end((err, res) => {
+                 res.should.have.status(200)
+                 res.body.should.be.a('array')
+                 res.body.length.should.be.eql(1)
+                 res.body[0].should.have.property('fullname')
+                 res.body[0].should.have.property('photo')
+                 res.body[0].should.have.property('evaluations')
+
+               done()
+             })
+         })
+
+       })
+   })
 })
