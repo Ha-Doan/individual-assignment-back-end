@@ -3,7 +3,7 @@ const { Class } = require('../models')
 
 router.get('/classes', (req, res, next) => {
   Class.find()
-    // Newest recipes first
+    // Newest classes first
     .sort({ createdAt: -1 })
     // Send the data in JSON format
     .then((classes) => res.json(classes))

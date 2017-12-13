@@ -4,19 +4,25 @@ const bodyParser = require('body-parser')
 const { classes, users, sessions } = require('./routes')
 const port = process.env.PORT || 3030
 const passport = require('./config/auth')
+const cors = require('cors')
+const config = require('config') //load the db location from the JSON files
+const morgan = require('morgan')
+const app = express()
 
-let app = express()
+//don't show the log when it is test
+if(config.util.getEnv('NODE_ENV') !== 'test') {
+    //use morgan to log at command line
+    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+}
 
 app
+  .use(cors())
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(passport.initialize())
-
-  // Our classes routes
   .use(classes)
   .use(users)
   .use(sessions)
-
   // catch 404 and forward to error handler
   .use((req, res, next) => {
     const err = new Error('Not Found')
@@ -33,15 +39,8 @@ app
     })
   })
 
-  .get('/classes', (req, res, next) => {
-    Class.find()
-      // Newest recipes first
-      .sort({ createdAt: -1 })
-      // Send the data in JSON format
-      .then((classes) => res.json(classes))
-      // Throw a 500 error if something goes wrong
-      .catch((error) => next(error))
-    })
   .listen(port, () => {
     console.log(`Server is listening on port ${port}`)
   })
+
+module.exports = app; // for testing

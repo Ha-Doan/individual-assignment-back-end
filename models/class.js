@@ -17,10 +17,10 @@ const studentSchema = new Schema({
 
 const classSchema = new Schema({
   students: [studentSchema],
-  batch: {type: Number, default: 0},
+  batch: {type: Number, require: true},
   startDate: { type: Date, default: Date.now },
   endDate: { type: Date, default: Date.now },
-  totalStudents: { type: Number, default: 0 },
+  totalStudents: { type: Number },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 }, { usePushEach: true }); // solved the problem of different version of MongoDB
