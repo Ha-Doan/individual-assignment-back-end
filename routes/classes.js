@@ -11,4 +11,16 @@ router.get('/classes', (req, res, next) => {
     .catch((error) => next(error))
   })
 
+  .post('/classes', (req, res, next) => {
+      const newClass = {
+        batch: req.body.batch,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+      }
+
+      Class.create(newClass)
+      .then((myClass) => res.json(myClass))
+      .catch((error) => next(error))
+    })
+
 module.exports = router

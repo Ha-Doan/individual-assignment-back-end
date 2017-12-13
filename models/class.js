@@ -17,9 +17,9 @@ const studentSchema = new Schema({
 
 const classSchema = new Schema({
   students: [studentSchema],
-  batch: {type: Number, require: true},
-  startDate: { type: Date, default: Date.now },
-  endDate: { type: Date, default: Date.now },
+  batch: {type: Number, default: 0, require: true},
+  startDate: { type: Date, default: Date.now, require: true },
+  endDate: { type: Date, default: Date.now , require: true},
   totalStudents: { type: Number },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

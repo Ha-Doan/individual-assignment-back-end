@@ -34,4 +34,28 @@ describe('Classes', () => {
       })
   })
 
+
+
+describe('/POST class', () => {
+  it('it should POST a class ', (done) => {
+     let myClass = {
+         batch: 1,
+         startDate: "2017-03-08",
+         endDate: "2017-05-08",
+     }
+     chai.request(server)
+         .post('/classes')
+         .send(myClass)
+         .end((err, res) => {
+             res.should.have.status(200);
+             res.body.should.be.a('object');
+             res.body.should.have.property('batch')
+             res.body.should.have.property('startDate')
+             res.body.should.have.property('endDate')
+
+           done();
+           })
+     })
+
+ })
 })
