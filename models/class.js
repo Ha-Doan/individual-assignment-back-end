@@ -8,7 +8,6 @@ const evaluationSchema = new Schema({
 });
 
 const studentSchema = new Schema({
-  id: { type: Number, default: 0 },
   fullname: {type: String, default: null},
   photo: { type: String, default: null },
   isEvaluated:  { type: Boolean, default: false },

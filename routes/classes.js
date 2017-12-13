@@ -10,7 +10,15 @@ router.get('/classes', (req, res, next) => {
     // Throw a 500 error if something goes wrong
     .catch((error) => next(error))
   })
-
+  .get('/classes/:id', (req, res, next) => {
+      const id = req.params.id
+      Class.findById(id)
+        .then((myClass) => {
+          if (!myClass) { return next() }
+          res.json(myClass)
+        })
+        .catch((error) => next(error))
+    })
   .post('/classes', (req, res, next) => {
       const newClass = {
         batch: req.body.batch,

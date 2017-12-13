@@ -1,7 +1,7 @@
 // index.js
 const express = require('express')
 const bodyParser = require('body-parser')
-const { classes, users, sessions } = require('./routes')
+const { classes, users, sessions, students } = require('./routes')
 const port = process.env.PORT || 3030
 const passport = require('./config/auth')
 const cors = require('cors')
@@ -23,6 +23,7 @@ app
   .use(classes)
   .use(users)
   .use(sessions)
+  .use(students)
   // catch 404 and forward to error handler
   .use((req, res, next) => {
     const err = new Error('Not Found')
