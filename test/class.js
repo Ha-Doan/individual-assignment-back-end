@@ -93,7 +93,7 @@ describe('/POST class', () => {
              students: [{
                fullname: "ha",
                photo: "photoUrl",
-               evaluations: [],
+               evaluations: [null],
              }],
          })
 
@@ -114,4 +114,42 @@ describe('/POST class', () => {
 
        })
    })
+
+   describe('/PATCH/:id class', () => {
+      it('it should UPDATE a class given the id', (done) => {
+        let myClass = new Class({
+            batch: 1,
+            startDate: "2017-03-08",
+            endDate: "2017-05-08",
+            students: [{
+              fullname: "ha",
+              photo: "photoUrl",
+              evaluations: [null],
+            }],
+          })
+
+            let myUpdatedClass = new Class({
+                batch: 1,
+                startDate: "2017-03-08",
+                endDate: "2017-05-08",
+                students: [{
+                  fullname: "ha",
+                  photo: "anotherPhotoUrl",
+                  evaluations: [null],
+                }],
+            })
+        myClass.save((err, myClass) => {
+                chai.request(server)
+                .patch('/classes/' + myClass.id)
+                .send(myUpdatedClass)
+                .end((err, res) => {
+                    res.should.have.status(200)
+                    res.body.should.be.a('object')
+                    res.body.students[0].should.have.property('photo').eql('anotherPhotoUrl')
+
+                  done()
+                })
+          })
+      })
+  })
 })
