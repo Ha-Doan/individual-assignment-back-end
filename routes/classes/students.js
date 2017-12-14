@@ -12,4 +12,5 @@ router
             // Throw a 500 error if something goes wrong
           .catch((error) => next(error))
       })
+
 module.exports = router
