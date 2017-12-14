@@ -79,7 +79,7 @@ router.get('/classes', (req, res, next) => {
           .then((result) => res.json(result))
           .catch((error) => next(error))
       })
-      .catch((error) => next(error))
+          .catch((error) => next(error))
   })
 
 module.exports = router

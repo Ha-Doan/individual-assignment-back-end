@@ -116,7 +116,7 @@ describe('/POST class', () => {
    })
 
    describe('/PATCH/:id class', () => {
-      it('it should UPDATE a class given the id', (done) => {
+      it('it should ADD a student to a class given the id', (done) => {
         let myClass = new Class({
             batch: 1,
             startDate: "2017-03-08",
@@ -128,24 +128,21 @@ describe('/POST class', () => {
             }],
           })
 
-            let myUpdatedClass = new Class({
-                batch: 1,
-                startDate: "2017-03-08",
-                endDate: "2017-05-08",
-                students: [{
-                  fullname: "ha",
-                  photo: "anotherPhotoUrl",
-                  evaluations: [null],
-                }],
-            })
+            let patchedStudent = {
+                fullname: "Thijs",
+                photo: "anotherPhotoUrl",
+                evaluations: [null],
+              }
+            let patchType = 'addStudent'
         myClass.save((err, myClass) => {
                 chai.request(server)
                 .patch('/classes/' + myClass.id)
-                .send(myUpdatedClass)
+                .send({ patchedStudent, patchType})
                 .end((err, res) => {
                     res.should.have.status(200)
                     res.body.should.be.a('object')
-                    res.body.students[0].should.have.property('photo').eql('anotherPhotoUrl')
+                    res.body.students[1].should.have.property('fullname').eql('Thijs')
+                    res.body.students[1].should.have.property('photo').eql('anotherPhotoUrl')
 
                   done()
                 })
