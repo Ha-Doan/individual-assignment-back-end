@@ -91,7 +91,7 @@ router.get('/classes', (req, res, next) => {
 
         const myStudent = req.body.patchedStudent
         const type = req.body.patchType
-        console.log('Type ' + type)
+
         var myPatchForClass = null
         if (type === 'addStudent')
           myPatchForClass = addNewStudent(myClass, myStudent)
@@ -111,4 +111,8 @@ router.get('/classes', (req, res, next) => {
           .catch((error) => next(error))
   })
 
+  .get('/classes/:id/:studentId', (req, res, next) => {
+      const id = req.params.id
+      console.log('ID ' + id)
+  })
 module.exports = router
