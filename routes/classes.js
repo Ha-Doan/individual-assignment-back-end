@@ -37,6 +37,14 @@ function editStudent(myClass, myStudent) {
   return patchForClass
 }
 
+function removeStudent(myClass, myStudent) {
+  const newStudents = myClass.students.filter(student => student._id != myStudent.id)  //they are equal values, not equal types
+  const patchForClass = Object.assign({}, myClass, {
+    students: newStudents
+  })
+  return patchForClass
+}
+
 router.get('/classes', (req, res, next) => {
     Class.find()
       // Newest classes first
@@ -89,6 +97,8 @@ router.get('/classes', (req, res, next) => {
           myPatchForClass = addNewStudent(myClass, myStudent)
         else if (type === 'editStudent')
           myPatchForClass = editStudent(myClass,myStudent)
+        else if (type === 'removeStudent')
+          myPatchForClass = removeStudent(myClass, myStudent)
 
         const updatedClass = { ...myClass, ...myPatchForClass}
 
