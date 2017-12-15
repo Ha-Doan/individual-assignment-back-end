@@ -5,15 +5,8 @@ const { classes, users, sessions, students } = require('./routes')
 const port = process.env.PORT || 3030
 const passport = require('./config/auth')
 const cors = require('cors')
-const config = require('config') //load the db location from the JSON files
-const morgan = require('morgan')
 const app = express()
 
-//don't show the log when it is test
-if(config.util.getEnv('NODE_ENV') !== 'test') {
-    //use morgan to log at command line
-    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
-}
 
 app
   .use(cors())
@@ -43,5 +36,3 @@ app
   .listen(port, () => {
     console.log(`Server is listening on port ${port}`)
   })
-
-module.exports = app; // for testing
