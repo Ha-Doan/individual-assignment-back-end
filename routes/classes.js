@@ -20,6 +20,23 @@ function addNewStudent(myClass, myStudent){
   return patchForClass
 }
 
+function editStudent(myClass, myStudent) {
+  const newStudents = myClass.students.map(student => {
+    if (student._id == myStudent.id) { //they are equal values, not equal types
+       if (myStudent.fullname !== '')
+          student.fullname = myStudent.fullname
+       if (myStudent.photo !== '')
+          student.photo = myStudent.photo
+     }
+     return student
+  })
+
+  const patchForClass = Object.assign({}, myClass, {
+    students: newStudents
+  })
+  return patchForClass
+}
+
 router.get('/classes', (req, res, next) => {
     Class.find()
       // Newest classes first
@@ -70,6 +87,8 @@ router.get('/classes', (req, res, next) => {
         var myPatchForClass = null
         if (type === 'addStudent')
           myPatchForClass = addNewStudent(myClass, myStudent)
+        else if (type === 'editStudent')
+          myPatchForClass = editStudent(myClass,myStudent)
 
         const updatedClass = { ...myClass, ...myPatchForClass}
 
